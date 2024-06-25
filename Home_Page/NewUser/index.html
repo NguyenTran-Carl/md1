@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Man hinh dang nhap</title>
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <form onsubmit="login(event)">
+        <h1>Đăng Nhập</h1>
+        <label for="Email">Email</label>
+        <input type="text" id="Email" name="Email"><br>
+        <label for="Matkhau">Mật khẩu</label>
+        <input type="text" id="Matkhau" name=" Matkhau"><br>
+        <button type="submit">Đăng Nhập</button>
+    </form>
+
+    <script>
+        function login() {
+            event.preventDefault()
+            // console.log("Da vao")
+            let Email = event.target.Email.value
+            let Matkhau = event.target.Matkhau.value
+
+            console.log("Data", Email, Matkhau);
+
+            let userList = JSON.parse(localStorage.getItem("userList"))
+
+            console.log("userList", userList);
+
+            let userExisted = null
+            for (let i = 0; i < userList.length; i++) {
+                if (userList[i].Email == Email) {
+                    userExisted = userList[i]
+                    break
+                }
+            }
+
+            if (!userExisted) {
+                alert("Không tồn tại");
+                return
+            }
+
+            if (userExisted.Matkhau != Matkhau) {
+                alert("Mật khẩu không đúng")
+                return
+            }
+            alert("Đăng Nhập thành công")
+
+            localStorage.setItem("Email", JSON.stringify(userExisted))
+            window.location.href = "/Home_Page"
+        }
+
+    </script>
+
+</body>
+
+</html>
